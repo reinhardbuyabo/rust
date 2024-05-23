@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 // CHARACTER GAME
 mod character; // importing
 
@@ -5,15 +7,39 @@ mod character; // importing
 mod math_operations;
 
 // use character::Character;
-use math_operations::division::divide; // FOLDER/FILE/FUNCTION
+// use math_operations::division::divide; // FOLDER/FILE/FUNCTION
 
 fn main() {
-    // let mut brayo: Character = Character::new(String::from("Brian"), 1, String::from("Beginner"));
-    // println!("{}", brayo.get_score());
-    // println!("{}", brayo.update_score());
-    // println!("{}", brayo.update_score());
+    #[derive(Debug)]
+    struct Institution {
+        offices: Vec<String>,
+        rooms: HashMap<String, i32>
+    }
 
-    divide();    
+    impl Institution {
+        fn new() -> Self {
+            Self {
+                offices: Vec::new(),
+                rooms: HashMap::new(),
+            }
+        }
+
+        fn add_offices(&mut self, office: String){
+            self.offices.push(office);
+        }
+
+        fn add_room(&mut self, room_name: String, room_number: i32) {
+            self.rooms.insert(room_name.clone(), room_number);
+            self.rooms.entry(room_name.clone()).or_insert(room_number);
+        }
+    }
+
+    let mut kencom: Institution = Institution::new();
+    kencom.add_offices(String::from("Manager's")); // this function mutates the instance, that's why its first parameter is a mutable reference to self
+
+    kencom.add_room("Room 1".to_string(), 1);
+
+    println!("{:?}", kencom);
 }
 
 
